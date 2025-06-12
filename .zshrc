@@ -23,23 +23,6 @@ plugins=(zsh-autosuggestions fzf)
 source $ZSH/oh-my-zsh.sh
 
 
-# Set personal aliases, overriding those provided by Oh My Zsh libs,
-# plugins, and themes. Aliases can be placed here, though Oh My Zsh
-# users are encouraged to define aliases within a top-level file in
-# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
-# - $ZSH_CUSTOM/aliases.zsh
-# - $ZSH_CUSTOM/macos.zsh
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-
-# homebrew path
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-
 # Oh my Zsh Theme Config
 precmd() {
   print -Pn "\n%F{yellow}[%m]%f %F{cyan}%d%f\n"
@@ -54,14 +37,23 @@ ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}%1{✗%}"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
 
 
-# Neofetch config
 if [ -f /.dockerenv ]; then
   neofetch --ascii_distro CRUX_small --disable gpu shell resolution wm theme icons cols term memory de
+  alias ls='exa -lh --git --tree -L 1 --icons --group-directories-first'
+  alias lsa='exa -lah --git --tree -L 1 --icons --group-directories-first'
+  alias fd='fdfind'
 elif [[ "$(uname -a)" = *"Darwin"* ]]; then
   neofetch --ascii_distro Mac_small --disable gpu shell resolution wm theme icons cols term memory de
+  alias ls='eza -lh --git --tree -L 0 --icons --group-directories-first'
+  alias lsa='eza -lah --git --tree -L 0 --icons --group-directories-first'
 else
   if [ ! "$TERM_PROGRAM" = tmux ]; then tmux; fi
   neofetch --ascii_distro Ubuntu_small --disable gpu shell resolution wm theme icons cols term memory de
+  # homebrew path
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  alias ls='exa -lh --git --tree -L 1 --icons --group-directories-first'
+  alias lsa='exa -lah --git --tree -L 1 --icons --group-directories-first'
+  alias fd='fdfind'
 fi
 
 
@@ -70,11 +62,6 @@ HISTFILE=~/.histfile
 HISTSIZE=100000
 SAVEHIST=10000
 
-
-# alias config
-alias ls='exa -lh --git --tree -L 1 --icons --group-directories-first'
-alias lsa='exa -lah --git --tree -L 1 --icons --group-directories-first'
-alias fd='fdfind'
 alias dfgit='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 
