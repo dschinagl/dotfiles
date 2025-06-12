@@ -64,18 +64,5 @@ if vim.fn.exists('g:vscode') == 0 then
   vim.api.nvim_set_keymap('n', '<leader>gh', '<cmd>Gitsigns preview_hunk_inline<cr>', 
       { desc = 'Gitsigns preview hunk inline', noremap = true, silent = true})
   
-  vim.api.nvim_set_keymap('n', '<leader>dc', '<cmd>DapContinue<cr>',
-      { desc = 'DapContinue', noremap = true, silent = true})
-  vim.api.nvim_set_keymap('n', '<leader>db', '<cmd>DapToggleBreakpoint<cr>',
-      { desc = 'DapToggleBreakpoint', noremap = true, silent = true})
-  
-  vim.api.nvim_set_keymap('n', '<leader>th', '<cmd>ToggleTerm direction=horizontal<cr>', 
-      { desc = 'ToggleTerm horizontal', noremap = true, silent = true})
-  vim.api.nvim_set_keymap('n', '<leader>tv', '<cmd>ToggleTerm direction=vertical<cr>', 
-      { desc = 'ToggleTerm vertical', noremap = true, silent = true})
-  vim.api.nvim_set_keymap('n', '<leader>tf', '<cmd>ToggleTerm direction=float<cr>', 
-      { desc = 'ToggleTerm horizontal', noremap = true, silent = true})
-  vim.api.nvim_set_keymap('n', '<leader>tt', '<cmd>terminal<cr>', 
-      { desc = 'Terminal here', noremap = true, silent = true})
   
 end

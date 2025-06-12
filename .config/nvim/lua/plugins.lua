@@ -14,18 +14,20 @@ vim.opt.rtp:prepend(lazypath)
 
 -- PLUGINS
 local plugins = {
-
-    "nvim-treesitter/playground",
-    "github/copilot.vim",
+    
+    -----------------------------------------------------------------
+    ---------------------------- General ----------------------------
+    -----------------------------------------------------------------
+    
+    -- asynchronous I/O operations in Neovim.
     "nvim-neotest/nvim-nio",
+    
 
-    {
-        "akinsho/toggleterm.nvim",
-        version = "*",
-        opts = {
-        }
-    },
+    -----------------------------------------------------------------
+    ---------------------------- UI ---------------------------------
 
+    
+    -- File Explorer
     {
         "nvim-tree/nvim-tree.lua",
         version = "*",
@@ -41,7 +43,8 @@ local plugins = {
             }
         }        
     },
-
+    
+    -- Bottom Statusline
     {
         "nvim-lualine/lualine.nvim",
         dependencies = {
@@ -56,11 +59,44 @@ local plugins = {
         }
     },
     
+    -- helper to visualize key mappings
+    {
+        "folke/which-key.nvim",
+        event = "VeryLazy",
+        init = function()
+            vim.o.timeout = true
+            vim.o.timeoutlen = 300
+        end
+    },
+
+
+    -----------------------------------------------------------------
+    ---------------------- Search / Navigate-------------------------
+    -----------------------------------------------------------------
+    
+    -- Fuzzy Finder over Lists
     {
         "nvim-telescope/telescope.nvim",
         dependencies = { 'nvim-lua/plenary.nvim' },
     },
     
+    -- Flash for fast searching 
+    {
+        "folke/flash.nvim",
+        event = "VeryLazy",
+        opts = {},
+        keys = {
+            { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+            { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+            { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+        },
+    },
+
+    -----------------------------------------------------------------
+    -------- Syntax / Parsing / Code Intelligence -------------------
+    -----------------------------------------------------------------
+
+    -- Parsing library to create syntax tree
     {
         "nvim-treesitter/nvim-treesitter", 
         build = ":TSUpdate",
@@ -79,21 +115,8 @@ local plugins = {
             }
         end
     },
-
-    {
-        "lewis6991/gitsigns.nvim",
-        config = function()
-            require("gitsigns").setup()
-        end
-    },
-
-    {
-        "ggandor/leap.nvim",
-        config = function()
-            require("leap").add_default_mappings(true)
-        end
-    },
-
+    
+    -- show lines for indent visualization
     {
         "lukas-reineke/indent-blankline.nvim",
         main="ibl",
@@ -102,21 +125,8 @@ local plugins = {
             scope = {show_start = false, enabled = true},
         },
     },
-
-    {
-        "folke/which-key.nvim",
-        event = "VeryLazy",
-        init = function()
-            vim.o.timeout = true
-            vim.o.timeoutlen = 300
-        end,
-        opts = {
-            -- your configuration comes here
-            -- or leave it empty to use the default settings
-            -- refer to the configuration section below
-        }
-    },
     
+    -- Helper for fast commenting
     {
         "numToStr/Comment.nvim",
         config = function()
@@ -129,6 +139,25 @@ local plugins = {
         end
     },
 
+
+    -----------------------------------------------------------------
+    ----------------------- Git Integration -------------------------
+    -----------------------------------------------------------------
+    
+    -- Buffer Integration
+    {
+        "lewis6991/gitsigns.nvim",
+        config = function()
+            require("gitsigns").setup()
+        end
+    },
+    
+
+    -----------------------------------------------------------------
+    ----------------------------- LSP--- ----------------------------
+    -----------------------------------------------------------------
+    
+    -- LSP server installing and management 
     {
         "williamboman/mason.nvim",
         build = ":MasonUpdate",
@@ -138,7 +167,6 @@ local plugins = {
             }
         end,
     },
-
     {
         "williamboman/mason-lspconfig.nvim",
         config = function()
@@ -147,7 +175,6 @@ local plugins = {
             }
         end,
     },
-    
     {
         "neovim/nvim-lspconfig",
         config = function()
@@ -155,20 +182,46 @@ local plugins = {
             require("lspconfig").texlab.setup{}
         end,
     },
-
+    
+    -- LSP status notifications
     {
         "j-hui/fidget.nvim",
         tag = "legacy",
         opts = {},
     },
     
+
+    -----------------------------------------------------------------
+    -------------------------- Autocompletion -----------------------
+    -----------------------------------------------------------------
+    
+    -- copilot plugin
     {
-        "WhoIsSethDaniel/toggle-lsp-diagnostics.nvim",
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
         config = function()
-            require('toggle_lsp_diagnostics').init({start_on = false})
+            require("copilot").setup({
+                suggestion = {
+                    enabled = false,
+                    auto_trigger = true,
+                },
+                panel = {
+                    enalbled = flase,
+                },
+            })
         end,
     },
+    
+    -- integrattion of copilot with nvim-cmp
+    {
+        "zbirenbaum/copilot-cmp",
+        config = function ()
+            require("copilot_cmp").setup()
+        end
+    },
 
+    -- nvim-cmp for autocompletion
     {
         "hrsh7th/nvim-cmp",
         event = 'InsertEnter',
@@ -184,7 +237,7 @@ local plugins = {
             local cmp = require("cmp")
             require("cmp").setup {
                 completion = {
-                    completeopt = "menu,menuone,noselect",
+                    completeopt = "menu,menuone,noinsert",
                 },
                 window = {
                     completion = {
@@ -197,6 +250,7 @@ local plugins = {
                     },
                 },
                 sources = {
+                    { name = 'copilot' },
                     { name = "nvim_lsp" },
                     { name = "buffer" },
                     { name = "path" },
@@ -209,6 +263,7 @@ local plugins = {
                             buffer = "[Buffer]",
                             nvim_lsp = "[LSP]",
                             nvim_lua = "[Lua]",
+                            copilot = "[CP]",
                         })[entry.source.name]
                         return vim_item
                     end
@@ -216,7 +271,7 @@ local plugins = {
                 mapping = {
                     ["<Down>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
                     ["<Up>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-                    ["<CR>"] = cmp.mapping.confirm({ select = false }),
+                    ["<C-y>"] = cmp.mapping.confirm({ select = true }),
                 },
             }
         end,
