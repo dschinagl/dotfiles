@@ -207,6 +207,23 @@ local syntax = {
   NERDTreeOpenable = {fg=base._D};
   NERDTreeFile = {bg=none};
   NERDTreeFlags = {fg=base._D};
+  
+  NvimTreeNormal = { fg = base._7, bg = base._0 };
+  NvimTreeFolderName = { fg = base._D };
+  NvimTreeRootFolder = { fg = base._C, attr = bold };
+  NvimTreeFolderIcon = { fg = base._D };
+  NvimTreeIndentMarker = { fg = base._2 };
+  NvimTreeExecFile = { fg = base._B, attr = bold };
+  NvimTreeSpecialFile = { fg = base._E, attr = underline };
+  NvimTreeImageFile = { fg = base._6 };
+  NvimTreeSymlink = { fg = base._C };
+  NvimTreeOpenedFile = { fg = base._A };
+  NvimTreeGitDirty = { fg = base._9 };
+  NvimTreeGitStaged = { fg = base._B };
+  NvimTreeGitMerge = { fg = base._A };
+  NvimTreeGitRenamed = { fg = base._D };
+  NvimTreeGitNew = { fg = base._B };
+  NvimTreeGitDeleted = { fg = base._8 }; 
 
   phpComparison = {fg=base._5};
   phpParent = {fg=base._5};
@@ -329,3 +346,4 @@ vim.cmd 'hi link LspDiagnosticsUnderlineInformation DiagnosticUnderlineInfo'
 vim.cmd 'hi link LspDiagnosticsUnderlineHint DiagnosticUnderlineHint'
 
 return syntax
+
