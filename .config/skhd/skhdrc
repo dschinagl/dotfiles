@@ -1,4 +1,3 @@
-ctrl + alt + cmd + shift - t : open -na ghostty
+ctrl + alt + cmd + shift - t : open -na /Applications/Ghostty.app
 ctrl + alt + cmd + shift - b : open -na "Brave Browser"
 ctrl + alt + cmd + shift - n : osascript -e 'tell application "Finder" to make new Finder window'
-

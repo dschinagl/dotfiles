@@ -44,8 +44,8 @@ if [ -f /.dockerenv ]; then
   alias fd='fdfind'
 elif [[ "$(uname -a)" = *"Darwin"* ]]; then
   neofetch --ascii_distro Mac_small --disable gpu shell resolution wm theme icons cols term memory de
-  alias ls='eza -lh --git --tree -L 0 --icons --group-directories-first'
-  alias lsa='eza -lah --git --tree -L 0 --icons --group-directories-first'
+  alias ls='eza -lh --git --tree -L 1 --icons --group-directories-first'
+  alias lsa='eza -lah --git --tree -L 1 --icons --group-directories-first'
 else
   if [ ! "$TERM_PROGRAM" = tmux ]; then tmux; fi
   neofetch --ascii_distro Ubuntu_small --disable gpu shell resolution wm theme icons cols term memory de
