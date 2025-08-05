@@ -196,30 +196,6 @@ local plugins = {
     -----------------------------------------------------------------
     
     -- copilot plugin
-    {
-        "zbirenbaum/copilot.lua",
-        cmd = "Copilot",
-        event = "InsertEnter",
-        config = function()
-            require("copilot").setup({
-                suggestion = {
-                    enabled = false,
-                    auto_trigger = true,
-                },
-                panel = {
-                    enalbled = flase,
-                },
-            })
-        end,
-    },
-    
-    -- integrattion of copilot with nvim-cmp
-    {
-        "zbirenbaum/copilot-cmp",
-        config = function ()
-            require("copilot_cmp").setup()
-        end
-    },
 
     -- nvim-cmp for autocompletion
     {
@@ -250,7 +226,6 @@ local plugins = {
                     },
                 },
                 sources = {
-                    { name = 'copilot' },
                     { name = "nvim_lsp" },
                     { name = "buffer" },
                     { name = "path" },
@@ -263,7 +238,6 @@ local plugins = {
                             buffer = "[Buffer]",
                             nvim_lsp = "[LSP]",
                             nvim_lua = "[Lua]",
-                            copilot = "[CP]",
                         })[entry.source.name]
                         return vim_item
                     end
