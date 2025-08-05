@@ -196,7 +196,17 @@ local plugins = {
     -----------------------------------------------------------------
     
     -- copilot plugin
-
+    {
+        "github/copilot.vim",
+        event = "BufEnter",
+        autoStart = true,
+        config = function()
+            vim.keymap.set("i", "<C-j>", function()
+            return vim.fn["copilot#Accept"]("<CR>")
+            end, { expr = true, silent = true, noremap = true, replace_keycodes = false })
+        end,
+    },
+    
     -- nvim-cmp for autocompletion
     {
         "hrsh7th/nvim-cmp",
@@ -213,7 +223,7 @@ local plugins = {
             local cmp = require("cmp")
             require("cmp").setup {
                 completion = {
-                    completeopt = "menu,menuone,noinsert",
+                    completeopt = "menu,noinsert",
                 },
                 window = {
                     completion = {
@@ -238,14 +248,15 @@ local plugins = {
                             buffer = "[Buffer]",
                             nvim_lsp = "[LSP]",
                             nvim_lua = "[Lua]",
+                            path = "[Path]",
                         })[entry.source.name]
                         return vim_item
                     end
                 },
                 mapping = {
-                    ["<Down>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-                    ["<Up>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-                    ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+                    ["<Tab>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+                    ["<S-Tab>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+                    ["<CR>"] = cmp.mapping.confirm({ select = true})
                 },
             }
         end,
@@ -255,3 +266,5 @@ local plugins = {
 local opts = {}
 
 require("lazy").setup(plugins, opt)
+
+
