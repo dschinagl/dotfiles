@@ -204,6 +204,7 @@ local plugins = {
             vim.keymap.set("i", "<C-j>", function()
             return vim.fn["copilot#Accept"]("<CR>")
             end, { expr = true, silent = true, noremap = true, replace_keycodes = false })
+            vim.g.copilot_no_tab_map = true
         end,
     },
     
