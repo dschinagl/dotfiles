@@ -40,7 +40,10 @@ local plugins = {
             },
             git = {
                 ignore = false
-            }
+            },
+            filters = {
+                custom = { "__pycache__", ".DS_Store", ".git" },
+            },
         }        
     },
     
