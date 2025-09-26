@@ -173,17 +173,23 @@ local plugins = {
     {
         "williamboman/mason-lspconfig.nvim",
         config = function()
-            require("mason-lspconfig").setup {
+            require("mason-lspconfig").setup({
                 ensure_installed = {"pyright", "texlab"}
-            }
+            })
+        
+            -- Optional: capabilities from nvim-cmp if present
+            local ok, cmp_lsp = pcall(require, "cmp_nvim_lsp")
+            if ok then
+                vim.lsp.config("*", {
+                    capabilities = cmp_lsp.default_capabilities(),
+                })
+            end
+
+            vim.lsp.enable({ "pyright", "texlab" })
         end,
     },
     {
         "neovim/nvim-lspconfig",
-        config = function()
-            require("lspconfig").pyright.setup{}
-            require("lspconfig").texlab.setup{}
-        end,
     },
     
     -- LSP status notifications
@@ -269,6 +275,6 @@ local plugins = {
 
 local opts = {}
 
-require("lazy").setup(plugins, opt)
+require("lazy").setup(plugins, opts)
 
 
