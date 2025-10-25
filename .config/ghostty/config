@@ -1,9 +1,9 @@
-theme = oceanic-next
+theme = Oceanic Next
 background = 000000
 font-family = "Maple Mono Normal NL NF"
 cursor-style = block
 cursor-style-blink = false
-mouse-scroll-multiplier = 0.1
+mouse-scroll-multiplier = 1
 background-opacity = 0.9
 background-blur = true
 macos-titlebar-style = hidden 

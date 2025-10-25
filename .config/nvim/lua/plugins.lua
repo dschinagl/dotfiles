@@ -216,6 +216,19 @@ local plugins = {
             vim.g.copilot_no_tab_map = true
         end,
     },
+
+    -- vimtex
+    {
+        "lervag/vimtex",
+        ft = { "tex", "plaintex", "latex" },
+        init = function()
+        vim.g.vimtex_view_method = "skim"
+        vim.g.vimtex_view_skim_sync = 1
+        vim.g.vimtex_view_skim_activate = 1
+        vim.g.vimtex_view_skim_reading_bar = 1
+        vim.g.vimtex_compiler_method = "latexmk"
+        end,
+    },
     
     -- nvim-cmp for autocompletion
     {
